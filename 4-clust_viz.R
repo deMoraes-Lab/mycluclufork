@@ -1,3 +1,5 @@
+#!/usr/bin/Rscript
+
 library(tidyverse)
 library(dbscan)
 library(Rtsne)
@@ -10,8 +12,8 @@ library(glue)
 # Globals ----
 
 RECALCULATE <- TRUE
-PSEARCH <- "jacc_q7_psearch.Rds"
-DISTANCE_M <- "jacc_q7.Rds"
+PSEARCH <- "results/jacc_q7_psearch.Rds"
+DISTANCE_M <- "results/jacc_q7.Rds"
 
 HYPER <- "jacc_q7"
 MIN_PTS <- 4

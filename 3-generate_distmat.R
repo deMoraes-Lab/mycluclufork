@@ -37,7 +37,7 @@ split_domains <- function(x, pattern = "\\|") {
 
 RECALCULATE <- TRUE
 
-hits_char <- read_tsv(HITS_CHAR)
+hits_char <- read_tsv(HITS_CHAR, show_col_types = FALSE)
 
 if (RECALCULATE) {
   wdl <- dist(as.list(hits_char$char),
@@ -47,7 +47,7 @@ if (RECALCULATE) {
 
   rownames(wdl) <- (hits_char$neID)
   colnames(wdl) <- (hits_char$neID)
-  write_rds(wdl, "jacc_q7.Rds")
+  write_rds(wdl, "results/jacc_q7.Rds")
 } else {
-  wdl <- read_rds("jacc_q7.Rds")
+  wdl <- read_rds("results/jacc_q7.Rds")
 }
