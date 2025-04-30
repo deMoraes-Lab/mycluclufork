@@ -1,4 +1,4 @@
-#!/usr/bin/env Rscript
+#!/usr/bin/Rscript
 
 # Globals ----
 
@@ -6,10 +6,10 @@ suppressPackageStartupMessages({
   library(tidyverse)
 })
 
-ARCHS <- "results/archs.tsv"
-NEIGHBORS <- "results/neighbors.tsv"
+ARCHS <- "data/archs.tsv"
+NEIGHBORS <- "data/neighbors.tsv"
 
-FLANK <- 7
+FLANK <- 12
 
 # Helpers ----
 
@@ -93,7 +93,7 @@ out |>
     archMEM, archPF, archIPR,
     archMEM_ext, archPF_ext, archIPR_ext
   ) |>
-  write_tsv("hits_flanks.tsv")
+  write_tsv("results/hits_flanks.tsv")
 
 # mout <- out |>
 #   ungroup() |>
