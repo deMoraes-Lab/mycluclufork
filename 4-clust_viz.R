@@ -11,7 +11,7 @@ library(glue)
 
 # Globals ----
 
-RECALCULATE <- TRUE
+RECALCULATE <- FALSE
 PSEARCH <- "results/jacc_q7_psearch.Rds"
 DISTANCE_M <- "results/jacc_q7.Rds"
 
@@ -62,6 +62,7 @@ hits_char <- read_tsv(HITS_CHAR)
 wdl <- read_rds(DISTANCE_M)
 
 HDB_wdl <- hdbscan(as.dist(wdl), minPts = MIN_PTS)
+write_rds(HDB_wdl, "results/HDB_wdl.Rds")
 
 x <- as_tibble(matrix(wdl, nrow = nrow(hits_char), ncol = nrow(hits_char)))
 
