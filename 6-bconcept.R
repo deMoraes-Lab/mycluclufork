@@ -15,7 +15,7 @@ PSEARCH <- "results/jacc_q7_psearch.Rds"
 
 HITS_CHAR <- "results/ARCH.tsv"
 
-SEED <- 424242
+SEED <- 455538
 set.seed(SEED)
 
 # Helpers ----
@@ -69,6 +69,11 @@ famask <- bmask(plot_data$family, .prob = 1.0)
 qsmall <- quantile(plot_data$LARCH, 10 / 100)
 qbig <- quantile(plot_data$LARCH, 90 / 100)
 
+plot_data <- plot_data |>
+  arrange(desc(LARCH)) |>
+  mutate(Ltop = 1:nrow(plot_data)) |>
+  arrange(LARCH) |>
+  mutate(Lbot = 1:nrow(plot_data))
 
 max_colors <- max(as.integer(as.character(plot_data$cluster))) + 1
 mycolors <- unsort(paletteer_c("grDevices::Dark 3", max_colors))
@@ -114,6 +119,10 @@ ggplot(plot_data) +
   #   segment.color = NA, alpha = 1 / 3,
   #   force = 2, force_pull = 0.5
   # ) +
+  # Path for small
+    geom_jitter(aes(x = delbyNA(V1, Lbot <= 16), y = delbyNA(V2, Lbot <= 16)), shape = 25, size = 1.6, color = "#29C75D") +
+  # Path for big
+  geom_jitter(aes(x = delbyNA(V1, Ltop <= 16), y = delbyNA(V2, Ltop <= 16)), shape = 24, size = 1.6, color = "#C72992", alpha) +
   # bad quality
   geom_jitter(
     aes(
@@ -123,8 +132,7 @@ ggplot(plot_data) +
     color = "black",
     alpha = 1,
     size = 1.2,
-    shape = 4
-  ) +
+    shape = 4) +
   # Theme
   theme_fivethirtyeight(base_size = 18) +
   theme(legend.position = "none") +
@@ -139,3 +147,6 @@ ggplot(plot_data) +
     caption = "author: Becerra-Soto E."
   )
 ggsave("results/Bcon.pdf", width = 11, height = 8.5, units = "in", dpi = 300)
+
+  
+
