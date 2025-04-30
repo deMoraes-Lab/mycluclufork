@@ -109,20 +109,20 @@ ggplot(plot_data) +
     shape = 1,
     alpha = 1 / 6
   ) +
-  # geom_text_repel(
-  #   aes(
-  #     x = delbyNA(V1, famask),
-  #     y = delbyNA(V2, famask),
-  #     label = delbyNA(family, famask)
-  #   ),
-  #   max.overlaps = 1024, size = 0.32,
-  #   segment.color = NA, alpha = 1 / 3,
-  #   force = 2, force_pull = 0.5
-  # ) +
+  geom_text_repel(
+    aes(
+      x = delbyNA(V1, famask),
+      y = delbyNA(V2, famask),
+      label = delbyNA(family, famask)
+    ),
+    max.overlaps = 1024, size = 0.32,
+    segment.color = NA, alpha = 1 / 3,
+    force = 2, force_pull = 0.5
+  ) +
   # Path for small
-    geom_jitter(aes(x = delbyNA(V1, Lbot <= 16), y = delbyNA(V2, Lbot <= 16)), shape = 25, size = 1.6, color = "#29C75D") +
+  geom_jitter(aes(x = delbyNA(V1, Lbot <= 24), y = delbyNA(V2, Lbot <= 24)), shape = 25, size = 1.6, color = "#29C75D") +
   # Path for big
-  geom_jitter(aes(x = delbyNA(V1, Ltop <= 16), y = delbyNA(V2, Ltop <= 16)), shape = 24, size = 1.6, color = "#C72992", alpha) +
+  geom_jitter(aes(x = delbyNA(V1, Ltop <= 24), y = delbyNA(V2, Ltop <= 24)), shape = 24, size = 1.6, color = "#C72992") +
   # bad quality
   geom_jitter(
     aes(
@@ -132,7 +132,8 @@ ggplot(plot_data) +
     color = "black",
     alpha = 1,
     size = 1.2,
-    shape = 4) +
+    shape = 4
+  ) +
   # Theme
   theme_fivethirtyeight(base_size = 18) +
   theme(legend.position = "none") +
@@ -147,6 +148,3 @@ ggplot(plot_data) +
     caption = "author: Becerra-Soto E."
   )
 ggsave("results/Bcon.pdf", width = 11, height = 8.5, units = "in", dpi = 300)
-
-  
-
