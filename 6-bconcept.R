@@ -104,15 +104,26 @@ ggplot(plot_data) +
     shape = 1,
     alpha = 1 / 6
   ) +
-  geom_text_repel(
+  # geom_text_repel(
+  #   aes(
+  #     x = delbyNA(V1, famask),
+  #     y = delbyNA(V2, famask),
+  #     label = delbyNA(family, famask)
+  #   ),
+  #   max.overlaps = 1024, size = 0.32,
+  #   segment.color = NA, alpha = 1 / 3,
+  #   force = 2, force_pull = 0.5
+  # ) +
+  # bad quality
+  geom_jitter(
     aes(
-      x = delbyNA(V1, famask),
-      y = delbyNA(V2, famask),
-      label = delbyNA(family, famask)
+      x = delbyNA(V1, LARCH <= 7 | lengtho_ext != 25),
+      y = delbyNA(V2, LARCH <= 7 | lengtho_ext != 25)
     ),
-    max.overlaps = 1024, size = 0.32,
-    segment.color = NA, alpha = 1 / 3,
-    force = 2, force_pull = 0.5
+    color = "black",
+    alpha = 1,
+    size = 1.2,
+    shape = 4
   ) +
   # Theme
   theme_fivethirtyeight(base_size = 18) +
