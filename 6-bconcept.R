@@ -78,7 +78,7 @@ plot_data <- plot_data |>
 max_colors <- max(as.integer(as.character(plot_data$cluster))) + 1
 mycolors <- unsort(paletteer_c("grDevices::Dark 3", max_colors))
 
-ggplot(plot_data) +
+pwithnames <- ggplot(plot_data) +
   # Inliers
   geom_jitter(
     aes(
@@ -147,4 +147,76 @@ ggplot(plot_data) +
     subtitle = "tSNE axes, HDBSCAN clusters, Jaccard q-gram distance.",
     caption = "author: Becerra-Soto E."
   )
-ggsave("results/Bcon.pdf", width = 11, height = 8.5, units = "in", dpi = 300)
+ggsave("results/ClustersF.pdf", plot = pwithnames, width = 11, height = 8.5, units = "in", dpi = 300)
+
+
+pnonames <- ggplot(plot_data) +
+  # Inliers
+  geom_jitter(
+    aes(
+      x = delbyNA(V1, cluster != 0),
+      y = delbyNA(V2, cluster != 0)
+    ),
+    alpha = 1 / 4,
+    size = 0.74
+  ) +
+  # Outliers
+  geom_jitter(
+    aes(
+      x = delbyNA(V1, cluster == 0),
+      y = delbyNA(V2, cluster == 0)
+    ),
+    color = "red",
+    alpha = 1 / 8,
+    size = 0.18
+  ) +
+  # Clusters
+  geom_jitter(
+    aes(
+      x = delbyNA(V1, mask & cluster != 0),
+      y = delbyNA(V2, mask & cluster != 0),
+      color = delbyNA(cluster, mask & cluster != 0)
+    ),
+    size = 6,
+    shape = 1,
+    alpha = 1 / 6
+  ) +
+  # geom_text_repel(
+  #   aes(
+  #     x = delbyNA(V1, famask),
+  #     y = delbyNA(V2, famask),
+  #     label = delbyNA(family, famask)
+  #   ),
+  #   max.overlaps = 1024, size = 0.32,
+  #   segment.color = NA, alpha = 1 / 3,
+  #   force = 2, force_pull = 0.5
+  # ) +
+  # Path for small
+  geom_jitter(aes(x = delbyNA(V1, Lbot <= 24), y = delbyNA(V2, Lbot <= 24)), shape = 25, size = 1.6, color = "#29C75D") +
+  # Path for big
+  geom_jitter(aes(x = delbyNA(V1, Ltop <= 24), y = delbyNA(V2, Ltop <= 24)), shape = 24, size = 1.6, color = "#C72992") +
+  # bad quality
+  geom_jitter(
+    aes(
+      x = delbyNA(V1, LARCH <= 7 | lengtho_ext != 25),
+      y = delbyNA(V2, LARCH <= 7 | lengtho_ext != 25)
+    ),
+    color = "black",
+    alpha = 1,
+    size = 1.2,
+    shape = 4
+  ) +
+  # Theme
+  theme_fivethirtyeight(base_size = 18) +
+  theme(legend.position = "none") +
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank()
+  ) +
+  scale_color_manual(values = mycolors) +
+  labs(
+    title = "PTTG-neighborhoods can be clustered",
+    subtitle = "tSNE axes, HDBSCAN clusters, Jaccard q-gram distance.",
+    caption = "author: Becerra-Soto E."
+  )
+ggsave("results/Clusters.pdf", plot = pnonames, width = 11, height = 8.5, units = "in", dpi = 300)
