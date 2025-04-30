@@ -6,10 +6,11 @@ suppressPackageStartupMessages({
 
 # Globals ----
 
-HITS <- "hits_flanks.tsv"
-TAX <- "results/absence_presence.tsv"
-REGS <- "regs.tsv"
-ISCAN <- "results/iscan.tsv"
+TAX <- "data/absence_presence.tsv"
+REGS <- "data/regs.tsv"
+ISCAN <- "data/iscan.tsv"
+
+HITS <- "results/hits_flanks.tsv"
 
 # Helpers ----
 
@@ -154,4 +155,4 @@ char_codes <- hits |>
 hits <- left_join(hits, char_codes, join_by(neID))
 
 hits |>
-  write_tsv("ARCH.tsv")
+  write_tsv("results/ARCH.tsv")
