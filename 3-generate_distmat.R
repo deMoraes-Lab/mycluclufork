@@ -8,13 +8,13 @@ suppressPackageStartupMessages({
   library(proxy)
 })
 
-HITS_CHAR <- "ARCH.tsv"
+HITS_CHAR <- "results/ARCH.tsv"
 WEIGHTS <- c(s = 1, i = 1, d = 1, t = 1)
 
 # Helpers ----
 
 damerau <- function(x, y, ...) {
-  stringdist::stringdist(x, y, method = "qgram", q = 5, weight = ...)
+  stringdist::stringdist(x, y, method = "jaccard", q = 7, weight = ...)
 }
 
 pr_DB$set_entry(FUN = damerau, names = c("Damerau", "Damerau-Levenshtein", "dl"))
@@ -47,7 +47,7 @@ if (RECALCULATE) {
 
   rownames(wdl) <- (hits_char$neID)
   colnames(wdl) <- (hits_char$neID)
-  write_rds(wdl, "qgram_q5.Rds")
+  write_rds(wdl, "jacc_q7.Rds")
 } else {
-  wdl <- read_rds("qgram_q5.Rds")
+  wdl <- read_rds("jacc_q7.Rds")
 }

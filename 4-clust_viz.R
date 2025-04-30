@@ -10,18 +10,18 @@ library(glue)
 # Globals ----
 
 RECALCULATE <- TRUE
-PSEARCH <- "qgram_full_q5_psearch.Rds"
-DISTANCE_M <- "qgram_q5.Rds"
+PSEARCH <- "jacc_q7_psearch.Rds"
+DISTANCE_M <- "jacc_q7.Rds"
 
-HYPER <- "qgram_full_q5"
+HYPER <- "jacc_q7"
 MIN_PTS <- 4
-PERPLEXITIES <- 2^c(2:9)
+PERPLEXITIES <- 2^c(2:10)
 THREADS <- 12
 
 SEED <- 424242
 set.seed(SEED)
 
-HITS_CHAR <- "ARCH.tsv"
+HITS_CHAR <- "results/ARCH.tsv"
 
 # Helpers ----
 
